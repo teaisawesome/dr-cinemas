@@ -1,11 +1,8 @@
-const { Schema } = require('mongoose')
+const mongoose = require('mongoose')
 
-const movieSchema = new Schema(
+const movieSchema = new mongoose.Schema(
     {
-        title: {
-            String,
-            required: true
-        },
+        title: String,
         genre: [String],
         director: String,
         actors: [String],

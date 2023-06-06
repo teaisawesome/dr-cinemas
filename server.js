@@ -13,10 +13,16 @@ app.use(bodyParser.urlencoded({ extended: true }))
 mongoose.connect(mongoDbAtlasConnection.mongoDbConnection)
 .then((succ)=> {
     console.log("Successfully connected to MongoDb Atlas!")
+    initApis()
+    console.log("APIs are ready!")
 })
 .catch((err) => {
     console.log("Error occured during MongoDb Atlas connection:", err)
 })
+
+function initApis() {
+    require("./src/api/movieApi.js")(app)
+}
 
 const PORT = process.env.PORT || 8080
 
