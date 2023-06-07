@@ -13,6 +13,19 @@ const createMovie = async (req, res) => {
     }
 }
 
+const findAllMovie = async (req, res) => {
+    try {
+        const movies = await movieService.getAllMovie()
+        console.log(movies, "All Movies")
+        res.status(200).json(movies)
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({ error: 'Failed to find all movie.'})
+    }
+}
+
 module.exports = {
-    createMovie
+    createMovie,
+    findAllMovie
 }

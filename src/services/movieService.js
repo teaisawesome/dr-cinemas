@@ -20,6 +20,18 @@ const createMovie = async function (title, genre, director, actors, releaseDate,
     }
 }
 
+const getAllMovie =  async function () {
+    try {
+        const allMovie = await Movie.find({})
+
+        return allMovie
+    }
+    catch(err) {
+        throw new Error("Movie Service - find all movie error occured:", err)
+    }
+}
+
 module.exports = {
-    createMovie
+    createMovie,
+    getAllMovie
 }
