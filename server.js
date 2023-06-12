@@ -1,11 +1,11 @@
-const express = require("express")
-const bodyParser = require("body-parser")
-const mongoose = require("mongoose")
-const cors = require("cors")
+const express = require('express')
+const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
+const cors = require('cors')
 require('dotenv').config()
 
-const mongoDbAtlasConnection = require("./src/db/db.config.js")
-const initializeApis  = require("./src/api/initializeApi.js")
+const mongoDbAtlasConnection = require('./src/db/db.config.js')
+const initializeApis  = require('./src/api/initializeApi.js')
 
 const app = express()
 
@@ -23,17 +23,17 @@ app.use((req, res, next) => {
 
 mongoose.connect(mongoDbAtlasConnection.mongoDbConnection)
 .then((succ)=> {
-    console.log("Successfully connected to MongoDb Atlas!")
+    console.log('Successfully connected to MongoDb Atlas!')
     initializeApis(app)
 })
 .catch((err) => {
-    console.log("Error occured during MongoDb Atlas connection:", err)
+    console.log('Error occured during MongoDb Atlas connection:', err)
 })
 
 const PORT = process.env.PORT || 8080
 
-app.get("/", (req, res) => {
-    res.json({ message: "Welcome to root page!"})
+app.get('/', (req, res) => {
+    res.json({ message: 'Welcome to root page!'})
 })
 
 app.listen(PORT, () => {
