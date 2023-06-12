@@ -1,7 +1,8 @@
 <template>
     <div class="card" style="width: 18rem;">
         <div class="image-container">
-            <img class="card-img-top" :src="`/img-movies/${movie.imgSource}`" alt="Card image cap">
+            <img class="card-img-top" :src="`/movie-posters/${movie.imgSource}`" alt="movie poster image">
+            <img class="age-rating-img" :src="`/age-ratings/${movie.ageRating}_copy.png`" alt="movie rating img">
         </div>
         <div class="card-body">
             <p class="card-text">{{ movie.title }}</p>
@@ -34,8 +35,18 @@ export default {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 50%; /* Adjust the height percentage as desired */
+  height: 30%; /* Adjust the height percentage as desired */
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(20, 27, 38, 1));
   pointer-events: none;
+  z-index: 1;
+}
+.age-rating-img {
+    width: 9rem;
+    height: 3.5rem;
+    position: absolute;
+    bottom: 1rem;
+    right: -1.9rem;
+    z-index: 2;
+    opacity: 0.8;
 }
 </style>
