@@ -30,7 +30,7 @@ mongoose.connect(mongoDbAtlasConnection.mongoDbConnection)
     console.log('Error occured during MongoDb Atlas connection:', err)
 })
 
-const PORT = process.env.PORT || 8080
+const PORT = process.env.SERVER_PORT || 8080
 
 app.get('/', (req, res) => {
     res.json({ message: 'Welcome to root page!'})
