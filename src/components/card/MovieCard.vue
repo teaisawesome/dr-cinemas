@@ -1,5 +1,5 @@
 <template>
-    <div class="card" style="width: 18rem;">
+    <div class="card">
         <div class="image-container">
             <img class="card-img-top" :src="`/movie-posters/${movie.imgSource}`" alt="movie poster image">
             <img class="age-rating-img" :src="`/age-ratings/${movie.ageRating}_copy.png`" alt="movie rating img">
@@ -25,6 +25,7 @@ export default {
 }
 .card {
     border: none;
+    width: 19rem;
 }
 .image-container {
   position: relative;
@@ -47,6 +48,16 @@ export default {
     bottom: 1rem;
     right: -1.9rem;
     z-index: 2;
-    opacity: 0.8;
+    opacity: 1;
+}
+@media screen and (max-width: 600px) {
+    .card {
+        width: 12rem;
+        margin: 0 auto;
+    }
+    .age-rating-img {
+        width: 5rem;
+        height: 2rem;
+    }
 }
 </style>

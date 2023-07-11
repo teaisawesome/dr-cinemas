@@ -4,7 +4,6 @@ const createMovie = async (req, res) => {
     try {
         const { title, genre, director, actors, releaseDate, duration } = req.body
         const newMovie = await movieService.createMovie(title, genre, director, actors, releaseDate, duration)
-        console.log(req.body, "DR")
         res.status(200).json(newMovie)
     }
     catch (err) {
@@ -16,7 +15,6 @@ const createMovie = async (req, res) => {
 const findAllMovie = async (req, res) => {
     try {
         const movies = await movieService.getAllMovie()
-        console.log(movies, "All Movies")
         res.status(200).json(movies)
     }
     catch (err) {
