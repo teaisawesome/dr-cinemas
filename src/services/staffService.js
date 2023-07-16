@@ -2,20 +2,24 @@ const Staff = require('../db/models/staffModel')
 
 const createStaff = async function (username, password, email, firstname, surname, isAdmin) {
     try {
-        const newUser = new User({
-            title,
-            genre,
-            director,
-            actors,
-            releaseDate,
-            duration
+        const newStaff = new Staff({
+            username,
+            password,
+            email,
+            firstname,
+            surname,
+            isAdmin
         })
 
-        const savedMovie = await newMovie.save()
+        const savedStaff = await newStaff.save()
         
-        return savedMovie
+        return savedStaff
     }
     catch (err) {
-        throw new Error("Movie Service - create movie error occured:", err)
+        throw new Error("Staff Service - create staff error occured:", err)
     }
+}
+
+module.exports = {
+    createStaff
 }
