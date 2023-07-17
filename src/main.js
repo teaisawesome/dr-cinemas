@@ -1,5 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -14,5 +17,7 @@ const axiosInstance = axios.create({
 
 app.config.globalProperties.$axios = axiosInstance
 
+library.add(fas)
+
 // eslint-disable-next-line
-app.use(store).use(router).mount('#app')
+app.component('font-awesome-icon', FontAwesomeIcon).use(store).use(router).mount('#app')

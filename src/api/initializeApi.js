@@ -1,3 +1,4 @@
+const loginApi = require("./loginApi.js")
 const movieApi = require("./movieApi.js")
 const staffApi = require("./staffApi.js")
 
@@ -7,6 +8,7 @@ function initializeApis(app) {
 
         movieApi(app)
         staffApi(app)
+        loginApi(app)
 
         console.log("APIs are ready")
     }
