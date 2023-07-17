@@ -20,6 +20,18 @@ const createStaff = async function (username, password, email, firstname, surnam
     }
 }
 
+const getAllStaff = async () => {
+    try {
+        const allStaff = await Movie.find({})
+
+        return allStaff
+    }
+    catch (err) {
+        throw new Error("Staff Service - read all staff error occured:", err)
+    }
+}
+
 module.exports = {
-    createStaff
+    createStaff,
+    getAllStaff
 }

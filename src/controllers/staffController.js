@@ -14,6 +14,21 @@ const createStaff = async (req, res) => {
     } 
 }
 
+const findAllStaff = async (req, res) => {
+    try {
+        const allStaff = await staffService.getAllStaff()
+        res.status(200).json(allStaff)
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({
+            error:  'Failed to find all staff record.'
+        })
+    } 
+}
+
+
 module.exports = {
-    createStaff
+    createStaff,
+    findAllStaff
 }
