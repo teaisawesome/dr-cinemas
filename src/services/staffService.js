@@ -22,7 +22,7 @@ const createStaff = async function (username, password, email, firstname, surnam
 
 const getAllStaff = async () => {
     try {
-        const allStaff = await Movie.find({})
+        const allStaff = await Staff.find({})
 
         return allStaff
     }
