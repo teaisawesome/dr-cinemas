@@ -9,6 +9,7 @@
         <div class="navbar-nav">
           <router-link class="nav-link" to="/">Mozilap</router-link>
           <router-link class="nav-link" to="/about">Műsorok</router-link>
+          <router-link class="nav-link" to="/login">Belépés</router-link>
         </div>
       </div>
     </div>

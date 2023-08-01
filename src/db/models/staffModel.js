@@ -33,6 +33,16 @@ staffSchema.pre("save", function (next) {
       }
 })
 
+staffSchema.methods.comparePassword = function(password, cb) {
+  bcrypt.compare(password, this.password, function(err, isMatch) {
+    if (err) {
+        return cb(err)
+    } else {
+        cb(null, isMatch)
+    }
+  })
+}
+
 const Staff = mongoose.model('Staff', staffSchema)
 
 module.exports = Staff

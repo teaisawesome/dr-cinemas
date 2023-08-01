@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 const mongoose = require('mongoose')
 const cors = require('cors')
 require('dotenv').config()
@@ -11,13 +12,19 @@ const app = express()
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(cors())
+app.use(cookieParser())
+app.use(cors({
+    credentials: true,
+    origin: process.env.ALLOWED_ORIGIN
+}))
 
 // CORS beállítások
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGIN); // Engedélyezett eredet (domain)
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Engedélyezett kérésmetódusok
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Engedélyezett fejlécek
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGIN);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Authorization')
+
     next();
 });
 

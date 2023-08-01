@@ -12,7 +12,8 @@ import axios from 'axios'
 const app = createApp(App)
 
 const axiosInstance = axios.create({
-    baseURL: process.env.VUE_APP_AXIOS_BASE_URL
+    baseURL: process.env.VUE_APP_AXIOS_BASE_URL,
+    withCredentials: true
 })
 
 app.config.globalProperties.$axios = axiosInstance

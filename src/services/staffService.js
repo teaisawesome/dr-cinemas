@@ -1,4 +1,5 @@
 const Staff = require('../db/models/staffModel')
+const bcrypt = require('bcryptjs')
 
 const createStaff = async function (username, password, email, firstname, surname, isAdmin) {
     try {
@@ -31,7 +32,31 @@ const getAllStaff = async () => {
     }
 }
 
+const validateStaff = async (email, password) => {
+    try {
+        const staff = await Staff.findOne({ email: email })
+
+        if(!staff) {
+            return false
+        }
+
+        return new Promise((resolve, reject) => {
+            bcrypt.compare(password, staff.password, function(err, isMatch) {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(isMatch)
+                }
+            })
+        })
+    }
+    catch (err) {
+        throw new Error("Staff Service - validateStaff error occured:", err)
+    }
+}
+
 module.exports = {
     createStaff,
-    getAllStaff
+    getAllStaff,
+    validateStaff
 }

@@ -1,15 +1,15 @@
 <template>
     <div class="login-form-container container">
         <div class="row">
-            <div class="col-md-6 offset-md-3">
+            <div @submit.prevent="login" class="col-md-6 offset-md-3">
                 <form class="form">
                     <h3>Bejelentkezés</h3>
                     <div class="email-container">
-                        <input type="email" class="form-control" placeholder="Email">
+                        <input v-model="email" type="email" class="form-control" placeholder="Email">
                     </div>
                     <div class="password-container">
                         <div class="input-group">
-                            <input class="form-control" :type="hidePassword ? 'password' : 'text'" placeholder="Jelszó">
+                            <input v-model="password" class="form-control" :type="hidePassword ? 'password' : 'text'" placeholder="Jelszó">
                             <button class="btn btn-outline-secondary" type="button" @click="showHidePassword">
                                 <font-awesome-icon :icon="hidePassword ? 'eye' : 'eye-slash'"/>
                             </button>
@@ -31,13 +31,27 @@ export default {
     },
     data: function() {
         return {
-            hidePassword: true
+            hidePassword: true,
+            email: '',
+            password: ''
         }
     },
     methods: {
         showHidePassword: function() {
             this.hidePassword = !this.hidePassword
             console.log(this.hidePassword)
+        },
+        login: async function() {
+            try {
+                const res = await this.$axios.post('/login', {
+                    email: this.email,
+                    password: this.password
+                })
+
+                console.log(res)
+            } catch (err) {
+                console.log(err)
+            }
         }
     }
 }
