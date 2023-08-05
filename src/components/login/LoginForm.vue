@@ -4,6 +4,7 @@
             <div @submit.prevent="login" class="col-md-6 offset-md-3">
                 <form class="form">
                     <h3>Bejelentkezés</h3>
+                    <h4 class="login-error-message" v-if="this.error">Sikertelen bejelentkezés!</h4>
                     <div class="email-container">
                         <input v-model="email" type="email" class="form-control" placeholder="Email">
                     </div>
@@ -23,6 +24,7 @@
 </template>
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import router from '@/router/index.js'
 
 export default {
     name: 'LoginForm',
@@ -33,7 +35,8 @@ export default {
         return {
             hidePassword: true,
             email: '',
-            password: ''
+            password: '',
+            error: false
         }
     },
     methods: {
@@ -48,9 +51,11 @@ export default {
                     password: this.password
                 })
 
-                console.log(res)
+                if (res.status === 200) {
+                    router.push('/about')
+                }
             } catch (err) {
-                console.log(err)
+                this.error = true
             }
         }
     }
@@ -82,6 +87,10 @@ export default {
 h3 {
   color: goldenrod;
   text-transform: uppercase;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+}
+.login-error-message {
+    color: crimson;
+    margin-bottom: 1rem;
 }
 </style>

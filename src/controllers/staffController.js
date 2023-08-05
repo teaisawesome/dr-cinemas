@@ -33,10 +33,9 @@ const loginStaff = async (req, res) => {
         const { email, password } = req.body
         const validUser = await staffService.validateStaff(email, password)
         
-        console.log(validUser, "VALIDUSER")
         if(!validUser) {
-            res.status(403).json({
-                error:  'Invalid login'
+            res.status(401).json({
+                error: 'Invalid login'
             })
         }
         else {
@@ -44,10 +43,10 @@ const loginStaff = async (req, res) => {
     
             res.cookie('token', token, {
                 maxAge: 900000,
-                httpOnly: false,
+                httpOnly: true,
                 path: '/'
             }).status(200).json({
-                message: 'Login successful'
+                message: 'Login ok'
             })
         }
     }
