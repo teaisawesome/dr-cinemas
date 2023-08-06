@@ -46,7 +46,9 @@ const loginStaff = async (req, res) => {
                 httpOnly: true,
                 path: '/'
             }).status(200).json({
-                message: 'Login ok'
+                message: 'Login ok',
+                email: email,
+                token: token
             })
         }
     }

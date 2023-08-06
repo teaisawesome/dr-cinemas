@@ -21,4 +21,7 @@ app.config.globalProperties.$axios = axiosInstance
 library.add(fas)
 
 // eslint-disable-next-line
-app.component('font-awesome-icon', FontAwesomeIcon).use(store).use(router).mount('#app')
+//app.component('font-awesome-icon', FontAwesomeIcon).use(store).use(router).mount('#app')
+app.component('font-awesome-icon', FontAwesomeIcon)
+
+app.use(store).use(router).mount('#app')

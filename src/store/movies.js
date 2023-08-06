@@ -1,9 +1,9 @@
-const state = () => {
+const state = () => ({
     movies: []
-}
+})
 
 const getters = {
-    movies: (state, getters) => {
+    getMovies: (state) => {
         return state.movies
     }
 }

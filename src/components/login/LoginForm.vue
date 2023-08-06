@@ -1,7 +1,7 @@
 <template>
     <div class="login-form-container container">
         <div class="row">
-            <div @submit.prevent="login" class="col-md-6 offset-md-3">
+            <div @submit.prevent="staffLogin" class="col-md-6 offset-md-3">
                 <form class="form">
                     <h3>Bejelentkezés</h3>
                     <h4 class="login-error-message" v-if="this.error">Sikertelen bejelentkezés!</h4>
@@ -42,9 +42,8 @@ export default {
     methods: {
         showHidePassword: function() {
             this.hidePassword = !this.hidePassword
-            console.log(this.hidePassword)
         },
-        login: async function() {
+        staffLogin: async function() {
             try {
                 const res = await this.$axios.post('/login', {
                     email: this.email,
@@ -52,6 +51,7 @@ export default {
                 })
 
                 if (res.status === 200) {
+                    this.$store.dispatch('staffs/login', { email: res.data.email, token: res.data.token })
                     router.push('/about')
                 }
             } catch (err) {
