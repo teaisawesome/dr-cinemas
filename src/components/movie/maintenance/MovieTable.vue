@@ -25,7 +25,7 @@
                         </div>
                     </td>
                     <td>
-                        <button class="btn btn-warning edit-button"><font-awesome-icon :icon="'pen'"/></button>
+                        <button class="btn btn-warning edit-button"><font-awesome-icon :icon="'pen'"/>{{ movie._id }}</button>
                         <button class="btn btn-danger delete-button"><font-awesome-icon :icon="'trash'"/></button>
                     </td>
                 </tr>
