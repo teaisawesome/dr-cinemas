@@ -7,7 +7,7 @@
 import MovieTable from '@/components/movie/maintenance/MovieTable.vue'
 
 export default {
-  name: 'MoviesMaintenance',
+  name: 'MovieTableView',
   components: {
     MovieTable
   }

@@ -16,7 +16,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <router-link class="dropdown-item" to="/">Műsorok</router-link>
-              <router-link class="dropdown-item" to="/movies-maintenance">Filmek</router-link>
+              <router-link class="dropdown-item" to="/movies-maintenance/index">Filmek</router-link>
               <router-link class="dropdown-item" to="/">Termek</router-link>
               <router-link class="dropdown-item" to="/about">Dolgozók</router-link>
               <div class="dropdown-divider"></div>

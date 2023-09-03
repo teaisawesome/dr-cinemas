@@ -1,4 +1,5 @@
 const Movie = require('../db/models/movieModel')
+const MovieGenre = require('../db/models/movieGenreModel')
 
 const createMovie = async function (title, genre, director, actors, releaseDate, duration) {
     try {
@@ -31,7 +32,19 @@ const getAllMovie =  async function () {
     }
 }
 
+const getAllMovieGenre = async function () {
+    try {
+        const allMovieGenre = await MovieGenre.find({})
+
+        return allMovieGenre
+    }
+    catch(err) {
+        throw new Error("Movie Service - find all movie GENRE error occured:", err)
+    }
+}
+
 module.exports = {
     createMovie,
-    getAllMovie
+    getAllMovie,
+    getAllMovieGenre
 }

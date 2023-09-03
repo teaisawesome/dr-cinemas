@@ -23,7 +23,19 @@ const findAllMovie = async (req, res) => {
     }
 }
 
+const findAllMovieGenre = async (req, res) => {
+    try {
+        const movieGenres = await movieService.getAllMovieGenre()
+        res.status(200).json(movieGenres)
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({ error: 'Failed to find all movie genre.'})
+    }
+}
+
 module.exports = {
     createMovie,
-    findAllMovie
+    findAllMovie,
+    findAllMovieGenre
 }
