@@ -44,6 +44,7 @@ export default {
         ...mapGetters('movies', ['getMovieGenres']),
         getSortedMovieGenres() {
             const movieGenres = this.getMovieGenres
+            console.log(movieGenres)
             return sortedArrayByObjProp(movieGenres, 'genreName')
         }
     },
@@ -63,6 +64,10 @@ export default {
     padding-left: 0.5rem;
 }
 .movie-genre-option:checked {
-    background-color: goldenrod!important;
+    background-color: goldenrod;
+}
+.movie-genre-option:hover {
+    background-color: #141B26;
+    color: whitesmoke;
 }
 </style>

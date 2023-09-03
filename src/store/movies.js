@@ -8,7 +8,7 @@ const getters = {
         return state.movies
     },
     getMovieGenres: (state) => {
-        return [...state.movieGenres[0]].sort()
+        return state.movieGenres
     }
 }
 
