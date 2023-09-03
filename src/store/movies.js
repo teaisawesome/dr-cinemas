@@ -1,16 +1,23 @@
 const state = () => ({
-    movies: []
+    movies: [],
+    movieGenres: []
 })
 
 const getters = {
     getMovies: (state) => {
         return state.movies
+    },
+    getMovieGenres: (state) => {
+        return [...state.movieGenres[0]].sort()
     }
 }
 
 const mutations = {
     setMovies(state, movies) {
         state.movies = movies
+    },
+    setMovieGenres(state, movieGenres) {
+        state.movieGenres = movieGenres
     }
 }
 
