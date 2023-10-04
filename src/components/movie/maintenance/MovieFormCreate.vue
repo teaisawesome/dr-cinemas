@@ -17,6 +17,7 @@
             <input class="form-control" type="number" placeholder="...">
             <label class="form-label mt-3 movie-form-label">Leírás</label>
             <textarea class="form-control" rows="3" placeholder="..."></textarea>
+            <button class="btn mt-3 movie-save-btn">MENTÉS</button>
         </form>
     </div>
 </template>
@@ -25,7 +26,7 @@ import { mapGetters, mapMutations } from 'vuex'
 import sortedArrayByObjProp from '@/utils/objectSorter'
 
 export default {
-    name: 'MovieForm',
+    name: 'MovieFormCreate',
     methods: {
         ...mapMutations('movies', ['setMovieGenres']),
         submitForm: async function() {
@@ -69,5 +70,14 @@ export default {
 .movie-genre-option:hover {
     background-color: #141B26;
     color: whitesmoke;
+}
+.movie-save-btn {
+    width: 100%;
+    height: 3rem;
+    border-radius: 0.8rem;
+    font-size: 1.5rem;
+    background-color: goldenrod;
+    color: #141B26;
+    border-color: black;
 }
 </style>

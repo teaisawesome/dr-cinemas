@@ -1,15 +1,15 @@
 <template>
     <div>
-        <MovieForm/>
+        <MovieFormCreate/>
     </div>
 </template>
 <script>
-import MovieForm from '@/components/movie/maintenance/MovieForm'
+import MovieFormCreate from '@/components/movie/maintenance/MovieFormCreate'
 
 export default {
     name: 'MovieCreateView',
     components: {
-        MovieForm
+        MovieFormCreate
     }
 }
 
