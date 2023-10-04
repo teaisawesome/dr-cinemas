@@ -9,10 +9,12 @@
                     {{ movieGenre.genreName }}
                 </option>
             </select>
-            <label class="form-label movie-form-label">Rendező(k)</label>
+            <label class="form-label movie-form-label">Rendezők</label>
+            <input class="form-control" type="text" placeholder="...">
+            <label class="form-label movie-form-label">Színészek</label>
             <input class="form-control" type="text" placeholder="...">
             <label class="form-label movie-form-label">Megjelenés</label>
-            <input class="form-control" type="date">
+            <VueDatePicker v-model="selectedDate" format="yyyy-MM-dd" locale="hu" cancelText="Mégse" selectText="Kiválaszt"></VueDatePicker>
             <label class="form-label movie-form-label">Hossz (perc)</label>
             <input class="form-control" type="number" placeholder="...">
             <label class="form-label movie-form-label">Korhatár</label>
@@ -26,9 +28,19 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 import sortedArrayByObjProp from '@/utils/objectSorter'
+import VueDatePicker from '@vuepic/vue-datepicker'
+import '@vuepic/vue-datepicker/dist/main.css'
 
 export default {
     name: 'MovieFormCreate',
+    components: {
+        VueDatePicker
+    },
+    data() {
+        return {
+            selectedDate: new Date()
+        }
+    },
     methods: {
         ...mapMutations('movies', ['setMovieGenres']),
         submitForm: async function() {
