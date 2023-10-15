@@ -4,10 +4,10 @@
             <label class="form-label movie-form-label">Főcím</label>
             <input class="form-control" type="text" placeholder="...">
             <label class="form-label movie-form-label">Műfajok</label>
-            <select multiple class="form-control genre-multiselect" id="exampleFormControlSelect2">
-                <option class="movie-genre-option" v-for="(movieGenre, index) in getSortedMovieGenres" :key="index" :value="index + 1">
-                    {{ movieGenre.genreName }}
-                </option>
+            <select class="form-control genre-multiselect" id="exampleFormControlSelect2">
+                <option class="movie-genre-option">Action</option>
+                <option class="movie-genre-option">Thriller</option>
+                <option class="movie-genre-option">Romantic</option>
             </select>
             <label class="form-label movie-form-label">Rendezők</label>
             <input class="form-control" type="text" placeholder="...">
@@ -21,6 +21,8 @@
             <input class="form-control" type="number" placeholder="...">
             <label class="form-label movie-form-label">Leírás</label>
             <textarea class="form-control" rows="3" placeholder="..."></textarea>
+            <label class="form-label movie-form-label">Kép</label>
+            <input type="file" class="form-control" @change="onFileChanged">
             <button class="btn mt-3 movie-save-btn">MENTÉS</button>
         </form>
     </div>
@@ -53,6 +55,15 @@ export default {
             } catch (err) {
                 console.log(err)
             }
+        },
+        onFileChanged: async function(event) {
+            const formData = new FormData()
+            formData.append('imageSource', event.target.files[0])
+            await this.$axios.post('/movies-img', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
         }
     },
     computed: {

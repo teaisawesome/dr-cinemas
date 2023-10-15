@@ -1,4 +1,8 @@
 const movieService = require("../services/movieService")
+const firebase = require('../db/firebase')
+const { uploadBytes, ref } = require("@firebase/storage")
+
+const storageRef = firebase.getStorageRef()
 
 const createMovie = async (req, res) => {
     try {
@@ -9,6 +13,22 @@ const createMovie = async (req, res) => {
     catch (err) {
         console.log(err)
         res.status(500).json({ error: 'Failed to create new movie record.'})
+    }
+}
+
+const createMovieImage = async (req, res) => {
+    try {
+        const imageBuffer = req.file.buffer
+        const originalFileName = req.file.originalname
+
+        const fileRef = ref(storageRef,`image/${originalFileName}`)
+        await uploadBytes(fileRef, imageBuffer)
+
+        res.status(200).json({ message: 'Kép sikeresen feltöltve Firebase adatbázisba!'})
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({ error: 'Failed to create new movie image record.'})
     }
 }
 
@@ -36,6 +56,7 @@ const findAllMovieGenre = async (req, res) => {
 
 module.exports = {
     createMovie,
+    createMovieImage,
     findAllMovie,
     findAllMovieGenre
 }

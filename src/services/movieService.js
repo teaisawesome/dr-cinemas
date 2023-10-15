@@ -21,6 +21,18 @@ const createMovie = async function (title, genre, director, actors, releaseDate,
     }
 }
 
+const createMovieImage = async function (imageSource) {
+    try {
+        
+        
+        return true
+    }
+    catch (err) {
+        throw new Error("Movie Service - create movie image error occured:", err)
+    }
+}
+
+
 const getAllMovie =  async function () {
     try {
         const allMovie = await Movie.find({})
@@ -45,6 +57,7 @@ const getAllMovieGenre = async function () {
 
 module.exports = {
     createMovie,
+    createMovieImage,
     getAllMovie,
     getAllMovieGenre
 }

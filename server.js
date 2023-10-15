@@ -2,10 +2,13 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const mongoose = require('mongoose')
+const firebase = require('./src/db/firebase')
 const cors = require('cors')
 require('dotenv').config()
 
-const mongoDbAtlasConnection = require('./src/db/db.config.js')
+const databaseConfig = require('./src/db/db.config.js')
+const mongoDbAtlasConnection = databaseConfig.mongoDbConnection
+
 const initializeApis  = require('./src/api/initializeApi.js')
 
 const app = express()
@@ -28,14 +31,22 @@ app.use((req, res, next) => {
     next();
 });
 
-mongoose.connect(mongoDbAtlasConnection.mongoDbConnection)
-.then((succ)=> {
+mongoose.connect(mongoDbAtlasConnection)
+.then((succ) => {
     console.log('Successfully connected to MongoDb Atlas!')
     initializeApis(app)
 })
 .catch((err) => {
     console.log('Error occured during MongoDb Atlas connection:', err)
 })
+
+const firebaseInstance = firebase.getInstance()
+
+if(firebaseInstance.name) {
+    console.log('Successfully connected to Firebase!')
+} else {
+    console.log('Error occured during Firebase connection!')
+}
 
 const PORT = process.env.SERVER_PORT || 8080
 
