@@ -1,29 +1,32 @@
 <template>
     <div class="col-md-6 movie-form">
         <form @submit.prevent="submitForm">
-            <label class="form-label movie-form-label">Főcím</label>
-            <input class="form-control" type="text" placeholder="...">
-            <label class="form-label movie-form-label">Műfajok</label>
-            <select class="form-control genre-multiselect" id="exampleFormControlSelect2">
+            <label class="form-label movie-form-label">Főcím</label><span class="error-msg">{{ errorMsg.title }}</span>
+            <input v-model="title" class="form-control" type="text" placeholder="...">
+            <label class="form-label movie-form-label">Műfajok</label><span class="error-msg">{{ errorMsg.genres }}</span>
+            <select v-model="genres" class="form-control genre-multiselect" id="exampleFormControlSelect2">
                 <option class="movie-genre-option">Action</option>
                 <option class="movie-genre-option">Thriller</option>
                 <option class="movie-genre-option">Romantic</option>
             </select>
-            <label class="form-label movie-form-label">Rendezők</label>
-            <input class="form-control" type="text" placeholder="...">
-            <label class="form-label movie-form-label">Színészek</label>
-            <input class="form-control" type="text" placeholder="...">
-            <label class="form-label movie-form-label">Megjelenés</label>
+            <label class="form-label movie-form-label">Rendezők</label><span class="error-msg">{{ errorMsg.directors }}</span>
+            <div class="input-group">
+                <input v-model="director" class="form-control" type="text" placeholder="..."><button @click="addDirector" class="btn btn-warning">+</button>
+            </div>
+            <p @click="removeDirector(index)" class="input-sublist" v-for="(director, index) in directors" :key="index">{{ director }}</p>
+            <label class="form-label movie-form-label">Színészek</label><span class="error-msg">{{ errorMsg.actors }}</span>
+            <input v-model="actors" class="form-control" type="text" placeholder="...">
+            <label class="form-label movie-form-label">Megjelenés</label><span class="error-msg">{{ errorMsg.releaseDate }}</span>
             <VueDatePicker v-model="selectedDate" format="yyyy-MM-dd" locale="hu" cancelText="Mégse" selectText="Kiválaszt"></VueDatePicker>
-            <label class="form-label movie-form-label">Hossz (perc)</label>
-            <input class="form-control" type="number" placeholder="...">
-            <label class="form-label movie-form-label">Korhatár</label>
-            <input class="form-control" type="number" placeholder="...">
-            <label class="form-label movie-form-label">Leírás</label>
-            <textarea class="form-control" rows="3" placeholder="..."></textarea>
-            <label class="form-label movie-form-label">Kép</label>
-            <input type="file" class="form-control" @change="onFileChanged">
-            <button class="btn mt-3 movie-save-btn">MENTÉS</button>
+            <label class="form-label movie-form-label">Hossz (perc)</label><span class="error-msg">{{ errorMsg.movieLength }}</span>
+            <input v-model="movieLength" class="form-control" type="number" placeholder="...">
+            <label class="form-label movie-form-label">Korhatár</label><span class="error-msg">{{ errorMsg.age }}</span>
+            <input v-model="age" class="form-control" type="number" placeholder="...">
+            <label class="form-label movie-form-label">Leírás</label><span class="error-msg">{{ errorMsg.description }}</span>
+            <textarea v-model="description" class="form-control" rows="3" placeholder="..."></textarea>
+            <label class="form-label movie-form-label">Borítókép</label><span class="error-msg">{{ errorMsg.image }}</span>
+            <input @change="onFileChanged" type="file" class="form-control">
+            <button @click="newMovieSave" class="btn mt-3 movie-save-btn">MENTÉS</button>
         </form>
     </div>
 </template>
@@ -32,22 +35,30 @@ import { mapGetters, mapMutations } from 'vuex'
 import sortedArrayByObjProp from '@/utils/objectSorter'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
+import { validationMixin } from '@/utils/mixins/formValidationMixin'
 
 export default {
     name: 'MovieFormCreate',
     components: {
         VueDatePicker
     },
+    mixins: [validationMixin],
     data() {
         return {
-            selectedDate: new Date()
+            title: '',
+            director: '',
+            directorList: [],
+            genres: [],
+            actors: [],
+            selectedDate: new Date(),
+            movieLength: 0,
+            age: 0,
+            description: '',
+            errors: {}
         }
     },
     methods: {
         ...mapMutations('movies', ['setMovieGenres']),
-        submitForm: async function() {
-            console.log('submit movieform')
-        },
         fetchMovieGenres: async function() {
             try {
                 const resMovieGenres = await this.$axios.get('/movie-genres')
@@ -64,6 +75,18 @@ export default {
                     'Content-Type': 'multipart/form-data'
                 }
             })
+        },
+        newMovieSave: async function() {
+            this.errorMsg = this.validateForm()
+        },
+        addDirector: function() {
+            if (this.director) {
+                this.directors.push(this.director)
+                this.director = ''
+            }
+        },
+        removeDirector: function(index) {
+            this.directors.splice(index, 1)
         }
     },
     computed: {
@@ -72,6 +95,22 @@ export default {
             const movieGenres = this.getMovieGenres
             console.log(movieGenres)
             return sortedArrayByObjProp(movieGenres, 'genreName')
+        },
+        errorMsg: {
+            get() {
+                return this.errors
+            },
+            set(newValue) {
+                this.errors = newValue
+            }
+        },
+        directors: {
+            get() {
+                return this.directorList
+            },
+            set(newValue) {
+                this.directorList = newValue
+            }
         }
     },
     created() {
@@ -105,5 +144,18 @@ export default {
     background-color: goldenrod;
     color: #141B26;
     border-color: black;
+}
+.error-msg {
+    color: red;
+    margin-left: 1rem;
+}
+.input-sublist {
+    color: goldenrod;
+    margin-bottom: 0px;
+    margin-left: 0.5rem;
+}
+.input-sublist:hover {
+    cursor: pointer;
+    color: red;
 }
 </style>
