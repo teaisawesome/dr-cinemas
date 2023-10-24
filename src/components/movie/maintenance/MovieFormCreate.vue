@@ -5,6 +5,7 @@
             <input v-model="title" class="form-control" type="text" placeholder="...">
             <label class="form-label movie-form-label">Műfajok</label><span class="error-msg">{{ errorMsg.genres }}</span>
             <select v-model="genres" class="form-control genre-multiselect" id="exampleFormControlSelect2">
+                <option disabled selected>Select your option</option>
                 <option class="movie-genre-option">Action</option>
                 <option class="movie-genre-option">Thriller</option>
                 <option class="movie-genre-option">Romantic</option>
@@ -15,7 +16,10 @@
             </div>
             <p @click="removeDirector(index)" class="input-sublist" v-for="(director, index) in directors" :key="index">{{ director }}</p>
             <label class="form-label movie-form-label">Színészek</label><span class="error-msg">{{ errorMsg.actors }}</span>
-            <input v-model="actors" class="form-control" type="text" placeholder="...">
+            <div class="input-group">
+                <input v-model="actor" class="form-control" type="text" placeholder="..."><button @click="addActor" class="btn btn-warning">+</button>
+            </div>
+            <p @click="removeActor(index)" class="input-sublist" v-for="(actor, index) in actors" :key="index">{{ actor }}</p>
             <label class="form-label movie-form-label">Megjelenés</label><span class="error-msg">{{ errorMsg.releaseDate }}</span>
             <VueDatePicker v-model="selectedDate" format="yyyy-MM-dd" locale="hu" cancelText="Mégse" selectText="Kiválaszt"></VueDatePicker>
             <label class="form-label movie-form-label">Hossz (perc)</label><span class="error-msg">{{ errorMsg.movieLength }}</span>
@@ -24,7 +28,7 @@
             <input v-model="age" class="form-control" type="number" placeholder="...">
             <label class="form-label movie-form-label">Leírás</label><span class="error-msg">{{ errorMsg.description }}</span>
             <textarea v-model="description" class="form-control" rows="3" placeholder="..."></textarea>
-            <label class="form-label movie-form-label">Borítókép</label><span class="error-msg">{{ errorMsg.image }}</span>
+            <label class="form-label movie-form-label">Borítókép</label><span class="error-msg">{{ errorMsg.fileSelected }}</span>
             <input @change="onFileChanged" type="file" class="form-control">
             <button @click="newMovieSave" class="btn mt-3 movie-save-btn">MENTÉS</button>
         </form>
@@ -48,12 +52,14 @@ export default {
             title: '',
             director: '',
             directorList: [],
+            actor: '',
+            actorList: [],
             genres: [],
-            actors: [],
             selectedDate: new Date(),
             movieLength: 0,
             age: 0,
             description: '',
+            fileSelected: false,
             errors: {}
         }
     },
@@ -68,13 +74,14 @@ export default {
             }
         },
         onFileChanged: async function(event) {
-            const formData = new FormData()
+            this.fileSelected = true
+            /* const formData = new FormData()
             formData.append('imageSource', event.target.files[0])
             await this.$axios.post('/movies-img', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
-            })
+            }) */
         },
         newMovieSave: async function() {
             this.errorMsg = this.validateForm()
@@ -87,6 +94,15 @@ export default {
         },
         removeDirector: function(index) {
             this.directors.splice(index, 1)
+        },
+        addActor: function() {
+            if (this.actor) {
+                this.actors.push(this.actor)
+                this.actor = ''
+            }
+        },
+        removeActor: function(index) {
+            this.actors.splice(index, 1)
         }
     },
     computed: {
@@ -110,6 +126,14 @@ export default {
             },
             set(newValue) {
                 this.directorList = newValue
+            }
+        },
+        actors: {
+            get() {
+                return this.actorList
+            },
+            set(newValue) {
+                this.actorList = newValue
             }
         }
     },

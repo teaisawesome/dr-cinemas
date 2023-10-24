@@ -1,4 +1,4 @@
-import { validateRequired, validateRequiredArrayField } from '../validation'
+import { validateRequired, validateRequiredNumberField, validateRequiredArrayField } from '../validation'
 
 export const validationMixin = {
     methods: {
@@ -14,7 +14,35 @@ export const validationMixin = {
             }
 
             if (!validateRequiredArrayField(this.directors)) {
-                errors.directors = 'Rendező(k) megadása kötelező'
+                errors.directors = 'Rendezők megadása kötelező'
+            }
+
+            if (!validateRequiredArrayField(this.actors)) {
+                errors.actors = 'Színészek megadása kötelező'
+            }
+
+            if (!validateRequired(this.selectedDate)) {
+                errors.releaseDate = 'Megjelenés dátum megadása kötelező'
+            }
+
+            if (!validateRequiredNumberField(this.movieLength)) {
+                errors.movieLength = 'Film hossz megadása kötelező'
+            }
+
+            if (!validateRequiredNumberField(this.age)) {
+                errors.age = 'Korhatár megadása kötelező'
+            }
+
+            if (!validateRequired(this.description)) {
+                errors.description = 'Leírás mező kitöltése kötelező'
+            }
+
+            if (!validateRequired(this.description)) {
+                errors.description = 'Leírás mező kitöltése kötelező'
+            }
+
+            if (!validateRequired(this.fileSelected)) {
+                errors.fileSelected = 'Borítókép megadása kötelező'
             }
 
             return errors
